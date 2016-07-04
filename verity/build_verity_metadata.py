@@ -20,6 +20,7 @@ import sys
 import struct
 import tempfile
 import commands
+import subprocess
 
 VERSION = 0
 MAGIC_NUMBER = 0xb001b001
@@ -53,7 +54,9 @@ def sign_verity_table(table, signer_path, key_path, signer_args=None):
             cmd = " ".join((signer_path, signer_args, table_file.name,
                             key_path, signature_file.name))
             print cmd
-            run(cmd)
+            runcmd = [signer_path, table_file.name, key_path, signature_file.name];
+            sp = subprocess.Popen(runcmd)
+            sp.wait()
             return signature_file.read()
 
 def build_verity_table(block_device, data_blocks, root_hash, salt):
