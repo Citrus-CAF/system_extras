@@ -54,7 +54,7 @@ def sign_verity_table(table, signer_path, key_path, signer_args=None):
             cmd = " ".join((signer_path, signer_args, table_file.name,
                             key_path, signature_file.name))
             print cmd
-            runcmd = [signer_path, table_file.name, key_path, signature_file.name];
+            runcmd = cmd.split()
             sp = subprocess.Popen(runcmd)
             sp.wait()
             return signature_file.read()
